@@ -309,6 +309,8 @@ details[open] .chev{transform:rotate(180deg)}
 const WA_NUMBER='447548643209'; // TODO: troque pelo número real, só dígitos com DDI
 const STRIPE_URL='https://buy.stripe.com/4gM3cwenU6NZbawfj50gw06'; // Stripe Payment Link (£89.90)
 const PAYPAL_URL='https://www.paypal.com/ncp/payment/6X4GRH2P54X3G'; // PayPal NCP (£89.90)
+const ORDER_EMAIL='lider.producoes.ltda@gmail.com'; // e-mail que RECEBE os pedidos (FormSubmit envia um link de ativação na 1ª vez)
+const FORM_ENDPOINT='https://formsubmit.co/ajax/'+ORDER_EMAIL;
 const T={
 pt:{
 "sc.note2":"Os contatos entram em cena nos segundos finais da animação.",
@@ -968,6 +970,29 @@ function buildOrder(){
   notes:$('#fNotes').value.trim()
  };
 }
+function sendOrderEmail(o,status){
+ const payload={
+  _subject:'LEADER – '+status+' – '+o.comp,
+  _template:'table',
+  _captcha:'false',
+  Status:status,
+  Company:o.comp,
+  'Contact person':o.name,
+  WhatsApp:o.wa,
+  Email:o.mail,
+  Instagram:o.ig||'—',
+  Facebook:o.fb||'—',
+  Website:o.web||'—',
+  Models:o.models,
+  Delivery:o.del||'—',
+  Payment:o.pay||'—',
+  Notes:o.notes||'—',
+  Price:'£89.90'
+ };
+ try{
+  fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(function(){});
+ }catch(e){}
+}
 function waConfirmMessage(o){
  let m="Hello LEADER team! I've just completed my payment of £89.90 for the Christmas videos offer.\n\n";
  m+='*Order details:*\n';
@@ -995,6 +1020,7 @@ function showPaid(){
  paid.classList.remove('hidden');
  const form=document.getElementById('form');
  if(form)form.classList.add('hidden');
+ try{if(o&&!localStorage.getItem('leaderPaidSent')){sendOrderEmail(o,'Payment completed');localStorage.setItem('leaderPaidSent','1')}}catch(e){}
  const btn=document.getElementById('paidWa');
  if(btn)btn.href=waUrl(waConfirmMessage(order));
 }
@@ -1026,6 +1052,8 @@ $('#form').addEventListener('submit',e=>{
  const del=document.querySelector('input[name="delivery"]:checked').dataset.code;
  const ref='models='+models+';delivery='+del+(o.notes?';notes='+encodeURIComponent(o.notes.slice(0,400)):'');
  try{localStorage.setItem('leaderOrder',JSON.stringify(o))}catch(e){}
+ try{localStorage.removeItem('leaderPaidSent')}catch(e){}
+ sendOrderEmail(o,'Order placed');
  let url;
  if(pay==='paypal'){url=new URL(PAYPAL_URL)}
  else{url=new URL(STRIPE_URL);url.searchParams.set('prefilled_email',o.mail);url.searchParams.set('client_reference_id',ref)}
