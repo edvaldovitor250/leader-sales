@@ -256,21 +256,38 @@ details[open] .chev{transform:rotate(180deg)}
         </div>
       </div>
 
-      <div class="rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border border-gold/40 bg-gold/5">
-        <div>
-          <p class="text-sm font-semibold uppercase tracking-wider text-gold">Promotional price</p>
-          <p class="mt-1 text-white/75">2 personalised Christmas videos</p>
+      <div id="commentsBox" class="hidden rounded-2xl border border-white/10 bg-white/[.04] p-5 sm:p-6">
+        <label for="fNotes" class="block font-semibold">Additional Notes</label>
+        <p class="mt-1 text-sm text-white/60">Would you like to include any additional information in your videos? If so, please provide the details in the comments section below.</p>
+        <textarea id="fNotes" class="field mt-4 min-h-[120px] resize-y" rows="5" placeholder="e.g. specific wording for your greeting, colours to match your brand, or anything else you'd like us to include…"></textarea>
+      </div>
+
+      <div id="paymentBox" class="hidden rounded-2xl border border-white/10 bg-white/[.04] p-5 sm:p-6">
+        <p class="font-display font-black text-2xl tracking-tight">How would you like to pay?</p>
+        <p class="mt-1 text-sm text-white/60">Choose your preferred payment method to complete your order of £89.90.</p>
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <label class="model-choice"><input type="radio" name="pay" data-code="stripe"><span>Card — Stripe</span></label>
+          <label class="model-choice"><input type="radio" name="pay" data-code="paypal"><span>PayPal</span></label>
         </div>
-        <p class="font-display font-black text-4xl sm:text-5xl text-gold">£89.90</p>
       </div>
 
       <p id="formErr" class="hidden text-center font-semibold text-holly" role="alert"></p>
 
-      <div class="text-center">
-        <button type="submit" class="btn-gold inline-flex rounded-full px-10 py-4 items-center gap-3 text-lg font-semibold">Order now — £89.90</button>
-        <p class="mt-4 text-sm text-white/55">You will be redirected to our secure Stripe checkout to complete your payment.</p>
+      <div class="mx-auto w-full max-w-md rounded-2xl bg-white text-neutral-900 p-6 sm:p-8 text-center shadow-2xl shadow-black/40">
+        <p class="text-xs sm:text-sm font-semibold uppercase tracking-[.15em] text-neutral-500">Promotional price</p>
+        <p class="mt-2 font-display font-black text-5xl sm:text-6xl leading-none tracking-tight">£89.90</p>
+        <p class="mt-3 text-neutral-600">2 personalised Christmas videos</p>
+        <button type="submit" class="mt-6 w-full rounded-xl bg-neutral-200 hover:bg-neutral-300 text-neutral-800 font-semibold text-base sm:text-lg py-4 px-6 transition">Send order</button>
       </div>
+      <p class="mt-4 text-center text-sm text-white/55">You will be redirected to our secure payment page to complete your order.</p>
     </form>
+
+    <div id="paidBox" class="hidden glass rounded-3xl mt-10 p-6 sm:p-8 text-center">
+      <span class="mx-auto grid place-items-center w-16 h-16 rounded-full bg-pine text-4xl font-black text-white" aria-hidden="true">✓</span>
+      <p class="font-display font-black text-3xl tracking-tight mt-4">Payment completed — thank you!</p>
+      <p class="mt-3 text-white/75 max-w-xl mx-auto">Please confirm your payment and send us your order details on WhatsApp, so our team can start producing your personalised Christmas videos straight away.</p>
+      <a id="paidWa" href="#" target="_blank" rel="noopener" class="btn-gold inline-flex mt-6 rounded-full px-8 py-4 items-center gap-3 text-lg font-semibold"><i class="fa-brands fa-whatsapp text-2xl"></i> Confirm payment on WhatsApp</a>
+    </div>
   </div>
 </section>
 
@@ -284,7 +301,8 @@ details[open] .chev{transform:rotate(180deg)}
 
 <script>
 const WA_NUMBER='447548643209'; // TODO: troque pelo número real, só dígitos com DDI
-const STRIPE_URL='https://buy.stripe.com/__TODO__'; // TODO: troque pelo link real do Stripe Payment Link (£89.90)
+const STRIPE_URL='https://buy.stripe.com/4gM3cwenU6NZbawfj50gw06'; // Stripe Payment Link (£89.90)
+const PAYPAL_URL='https://www.paypal.com/ncp/payment/6X4GRH2P54X3G'; // PayPal NCP (£89.90)
 const T={
 pt:{
 "sc.note2":"Os contatos entram em cena nos segundos finais da animação.",
@@ -904,7 +922,7 @@ document.querySelectorAll('[data-model]').forEach(input=>input.addEventListener(
  updateModels();
 }));
 
-// Order form: pick exactly 2 models, then redirect to Stripe.
+// Order form: pick exactly 2 models, choose delivery, notes and payment method, then redirect to payment.
 const MAX_MODELS=2;
 function modelCount(){return new Set(Array.from(document.querySelectorAll('[data-model]:checked'),i=>i.dataset.model)).size}
 function updateModels(){
@@ -916,8 +934,66 @@ function updateModels(){
  if(hint)hint.classList.toggle('hidden',n===MAX_MODELS);
  const d=document.getElementById('delivery');
  if(d)d.classList.toggle('hidden',n!==MAX_MODELS);
+ const cb=document.getElementById('commentsBox');
+ if(cb)cb.classList.toggle('hidden',n!==MAX_MODELS);
+ const pb=document.getElementById('paymentBox');
+ if(pb)pb.classList.toggle('hidden',n!==MAX_MODELS);
 }
+document.querySelectorAll('input[name="delivery"],input[name="pay"]').forEach(r=>r.addEventListener('change',updateModels));
 updateModels();
+
+function buildOrder(){
+ const models=Array.from(document.querySelectorAll('[data-model]:checked'),i=>i.dataset.model).sort((a,b)=>a-b).join(' + ');
+ const del=document.querySelector('input[name="delivery"]:checked');
+ const pay=document.querySelector('input[name="pay"]:checked');
+ const delName={whatsapp:'WhatsApp',email:'Email',both:'WhatsApp and Email'}[del?del.dataset.code:''];
+ const payName={stripe:'Card (Stripe)',paypal:'PayPal'}[pay?pay.dataset.code:''];
+ return{
+  comp:$('#fComp').value.trim(),
+  name:$('#fName').value.trim(),
+  wa:$('#fWa').value.trim(),
+  mail:$('#fMail').value.trim(),
+  ig:$('#fIg').value.trim(),
+  fb:$('#fFb').value.trim(),
+  web:$('#fWeb').value.trim(),
+  models:models,
+  del:delName,
+  pay:payName,
+  notes:$('#fNotes').value.trim()
+ };
+}
+function waConfirmMessage(o){
+ let m="Hello LEADER team! I've just completed my payment of £89.90 for the Christmas videos offer.\n\n";
+ m+='*Order details:*\n';
+ m+='Company: '+o.comp+'\n';
+ m+='Contact: '+o.name+'\n';
+ m+='WhatsApp: '+o.wa+'\n';
+ m+='Email: '+o.mail+'\n';
+ const soc=[o.ig?'Instagram: '+o.ig:'',o.fb?'Facebook: '+o.fb:'',o.web?'Website: '+o.web:''].filter(Boolean).join('\n');
+ if(soc)m+=soc+'\n';
+ m+='Selected models: '+o.models+'\n';
+ if(o.del)m+='Delivery: '+o.del+'\n';
+ if(o.pay)m+='Payment method: '+o.pay+'\n';
+ if(o.notes)m+='\n*Additional notes:*\n'+o.notes+'\n';
+ m+='\nPayment confirmed — please start producing my personalised Christmas videos. Thank you!';
+ return m;
+}
+
+// After payment, the gateway redirects back with ?paid=1: show confirmation with WhatsApp CTA.
+function showPaid(){
+ const paid=document.getElementById('paidBox');
+ if(!paid)return;
+ let o=null;
+ try{o=JSON.parse(localStorage.getItem('leaderOrder')||'null')}catch(e){}
+ const order=o||{comp:'—',name:'—',wa:'—',mail:'—',ig:'',fb:'',web:'',models:'—',del:'',pay:'',notes:''};
+ paid.classList.remove('hidden');
+ const form=document.getElementById('form');
+ if(form)form.classList.add('hidden');
+ const btn=document.getElementById('paidWa');
+ if(btn)btn.href=waUrl(waConfirmMessage(order));
+}
+if(new URLSearchParams(location.search).has('paid'))showPaid();
+
 $('#form').addEventListener('submit',e=>{
  e.preventDefault();
  const form=e.currentTarget;
@@ -933,14 +1009,19 @@ $('#form').addEventListener('submit',e=>{
  else if(!okMail)msg='Please fill in a valid e-mail address.';
  else if(modelCount()!==MAX_MODELS)msg='Please select exactly '+MAX_MODELS+' video models.';
  else if(!document.querySelector('input[name="delivery"]:checked'))msg='Please choose how you would like to receive your finished videos.';
+ else if(!document.querySelector('input[name="pay"]:checked'))msg='Please choose your payment method.';
  const err=$('#formErr');
  if(msg){err.textContent=msg;err.classList.remove('hidden');return}
  err.classList.add('hidden');
+ const o=buildOrder();
+ const pay=document.querySelector('input[name="pay"]:checked').dataset.code;
  const models=Array.from(document.querySelectorAll('[data-model]:checked'),i=>i.dataset.model).sort((a,b)=>a-b).join('+');
  const del=document.querySelector('input[name="delivery"]:checked').dataset.code;
- const url=new URL(STRIPE_URL);
- url.searchParams.set('prefilled_email',mail.value.trim());
- url.searchParams.set('client_reference_id','models='+models+';delivery='+del);
+ const ref='models='+models+';delivery='+del+(o.notes?';notes='+encodeURIComponent(o.notes.slice(0,400)):'');
+ try{localStorage.setItem('leaderOrder',JSON.stringify(o))}catch(e){}
+ let url;
+ if(pay==='paypal'){url=new URL(PAYPAL_URL)}
+ else{url=new URL(STRIPE_URL);url.searchParams.set('prefilled_email',o.mail);url.searchParams.set('client_reference_id',ref)}
  window.location.href=url.toString();
 });
 

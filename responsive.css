@@ -7,6 +7,7 @@ figcaption .model-choice { margin-top: .75rem; }
 .model-choice:has(input:disabled) { opacity: .4; cursor: not-allowed; }
 .model-choice:has(input:disabled) input { cursor: not-allowed; }
 #modelCount { min-height: 1.5em; }
+#fNotes { min-height: 120px; line-height: 1.6; }
 .model-fieldset { min-width: 0; }
 .model-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 135px), 1fr)); gap: .5rem; margin-top: .5rem; }
 html { scroll-padding-top: 6.5rem; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
