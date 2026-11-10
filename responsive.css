@@ -4,6 +4,9 @@ figcaption .model-choice { margin-top: .75rem; }
 .model-choice:has(input:checked) { border-color: #ffc107; background: rgba(255,193,7,.12); color: #ffc107; }
 .model-choice:focus-within { outline: 2px solid #ffc107; outline-offset: 3px; }
 .model-choice input { width: 20px; height: 20px; flex-shrink: 0; accent-color: #ffc107; cursor: pointer; }
+.model-choice:has(input:disabled) { opacity: .4; cursor: not-allowed; }
+.model-choice:has(input:disabled) input { cursor: not-allowed; }
+#modelCount { min-height: 1.5em; }
 .model-fieldset { min-width: 0; }
 .model-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 135px), 1fr)); gap: .5rem; margin-top: .5rem; }
 html { scroll-padding-top: 6.5rem; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }

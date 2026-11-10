@@ -181,9 +181,98 @@ details[open] .chev{transform:rotate(180deg)}
   </div>
 </section>
 
-<!-- VANTAGENS -->
+<!-- ORDER FORM (STRIPE) -->
+<section id="pedido" class="relative scroll-mt-16">
+  <div class="aurora w-[560px] h-[560px] bg-plum -left-40 top-10" style="opacity:.35"></div>
+  <div class="aurora w-[440px] h-[440px] bg-pine -right-32 bottom-0" style="animation-delay:-7s;opacity:.3"></div>
+  <div class="relative max-w-3xl mx-auto px-5">
+    <div class="text-center">
+      <h2 class="font-display font-black text-4xl sm:text-5xl tracking-tight">Fill in the form below to place your order.</h2>
+      <p class="mt-5 text-white/75 text-lg max-w-2xl mx-auto">Request your personalised Christmas videos. If you don't have any of the details below, simply leave the relevant fields blank.</p>
+    </div>
 
+    <form id="form" class="glass rounded-3xl mt-10 p-6 sm:p-10 grid gap-8" novalidate>
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div>
+          <label for="fComp" class="block font-semibold mb-2">Company name <span class="text-gold" aria-hidden="true">*</span></label>
+          <input id="fComp" class="field" type="text" autocomplete="organization" placeholder="e.g. Muster Ltd" required>
+        </div>
+        <div>
+          <label for="fName" class="block font-semibold mb-2">Contact person's name <span class="text-gold" aria-hidden="true">*</span></label>
+          <input id="fName" class="field" type="text" autocomplete="name" placeholder="e.g. Jane Smith" required>
+        </div>
+        <div>
+          <label for="fWa" class="block font-semibold mb-2">WhatsApp number <span class="text-gold" aria-hidden="true">*</span></label>
+          <input id="fWa" class="field" type="tel" autocomplete="tel" placeholder="+44 7911 123456" required>
+          <p class="mt-2 text-sm text-white/60">Enter the number including the country code.</p>
+        </div>
+        <div>
+          <label for="fMail" class="block font-semibold mb-2">E-mail <span class="text-gold" aria-hidden="true">*</span></label>
+          <input id="fMail" class="field" type="email" autocomplete="email" placeholder="name@company.co.uk" required>
+        </div>
+      </div>
 
+      <div>
+        <p class="font-semibold mb-4">Social media and website <span class="font-normal text-white/60">(optional)</span></p>
+        <div class="grid gap-6 sm:grid-cols-3">
+          <div>
+            <label for="fIg" class="block text-sm font-semibold mb-2 text-white/75">Instagram</label>
+            <input id="fIg" class="field" type="text" placeholder="@yourcompany">
+          </div>
+          <div>
+            <label for="fFb" class="block text-sm font-semibold mb-2 text-white/75">Facebook</label>
+            <input id="fFb" class="field" type="text" placeholder="facebook.com/yourcompany">
+          </div>
+          <div>
+            <label for="fWeb" class="block text-sm font-semibold mb-2 text-white/75">Company website</label>
+            <input id="fWeb" class="field" type="url" placeholder="www.yourcompany.co.uk">
+          </div>
+        </div>
+      </div>
+
+      <fieldset class="model-fieldset">
+        <legend class="font-semibold px-0">Choose your 2 Christmas videos <span class="text-gold" aria-hidden="true">*</span></legend>
+        <p class="mt-1 text-sm text-white/60">Select two models from the seven available.</p>
+        <div class="model-options" role="group" aria-label="Choose your 2 Christmas videos">
+          <label class="model-choice"><input type="checkbox" data-model="1" aria-label="Model 1"><span>Model 1</span></label>
+          <label class="model-choice"><input type="checkbox" data-model="2" aria-label="Model 2"><span>Model 2</span></label>
+          <label class="model-choice"><input type="checkbox" data-model="3" aria-label="Model 3"><span>Model 3</span></label>
+          <label class="model-choice"><input type="checkbox" data-model="4" aria-label="Model 4"><span>Model 4</span></label>
+          <label class="model-choice"><input type="checkbox" data-model="5" aria-label="Model 5"><span>Model 5</span></label>
+          <label class="model-choice"><input type="checkbox" data-model="6" aria-label="Model 6"><span>Model 6</span></label>
+          <label class="model-choice"><input type="checkbox" data-model="7" aria-label="Model 7"><span>Model 7</span></label>
+        </div>
+        <p id="modelCount" class="mt-3 text-sm font-semibold text-white/75" aria-live="polite">0 of 2 selected</p>
+        <p id="modelHint" class="mt-2 text-sm text-white/60"><a href="#galeria" class="text-gold underline underline-offset-2 transition hover:text-white">Scroll back to the top</a> and select the 2 Christmas videos you'd like our team to personalise with your company logo!</p>
+      </fieldset>
+
+      <div id="delivery" class="hidden rounded-2xl border border-white/10 bg-white/[.04] p-5 sm:p-6">
+        <p class="text-sm font-semibold text-gold">If you've already selected your 2 Christmas videos, you can proceed!</p>
+        <p class="font-display font-black text-2xl tracking-tight mt-2">How would you like to receive your finished videos?</p>
+        <div class="mt-5 grid gap-3 sm:grid-cols-3">
+          <label class="model-choice"><input type="radio" name="delivery" data-code="whatsapp"><span>WhatsApp</span></label>
+          <label class="model-choice"><input type="radio" name="delivery" data-code="email"><span>Email</span></label>
+          <label class="model-choice"><input type="radio" name="delivery" data-code="both"><span>Both</span></label>
+        </div>
+      </div>
+
+      <div class="rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border border-gold/40 bg-gold/5">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wider text-gold">Promotional price</p>
+          <p class="mt-1 text-white/75">2 personalised Christmas videos</p>
+        </div>
+        <p class="font-display font-black text-4xl sm:text-5xl text-gold">£89.90</p>
+      </div>
+
+      <p id="formErr" class="hidden text-center font-semibold text-holly" role="alert"></p>
+
+      <div class="text-center">
+        <button type="submit" class="btn-gold inline-flex rounded-full px-10 py-4 items-center gap-3 text-lg font-semibold">Order now — £89.90</button>
+        <p class="mt-4 text-sm text-white/55">You will be redirected to our secure Stripe checkout to complete your payment.</p>
+      </div>
+    </form>
+  </div>
+</section>
 
 </main>
 
@@ -195,6 +284,7 @@ details[open] .chev{transform:rotate(180deg)}
 
 <script>
 const WA_NUMBER='447548643209'; // TODO: troque pelo número real, só dígitos com DDI
+const STRIPE_URL='https://buy.stripe.com/__TODO__'; // TODO: troque pelo link real do Stripe Payment Link (£89.90)
 const T={
 pt:{
 "sc.note2":"Os contatos entram em cena nos segundos finais da animação.",
@@ -811,7 +901,48 @@ window.onLangChange=function(){
 document.querySelectorAll('[data-model]').forEach(input=>input.addEventListener('change',()=>{
  document.querySelectorAll('[data-model="'+input.dataset.model+'"]').forEach(peer=>{peer.checked=input.checked});
  refreshWa();
+ updateModels();
 }));
+
+// Order form: pick exactly 2 models, then redirect to Stripe.
+const MAX_MODELS=2;
+function modelCount(){return new Set(Array.from(document.querySelectorAll('[data-model]:checked'),i=>i.dataset.model)).size}
+function updateModels(){
+ const n=modelCount();
+ document.querySelectorAll('[data-model]').forEach(i=>{i.disabled=!i.checked&&n>=MAX_MODELS});
+ const c=document.getElementById('modelCount');
+ if(c){c.textContent=n+' of '+MAX_MODELS+' selected';c.classList.toggle('text-gold',n===MAX_MODELS)}
+ const hint=document.getElementById('modelHint');
+ if(hint)hint.classList.toggle('hidden',n===MAX_MODELS);
+ const d=document.getElementById('delivery');
+ if(d)d.classList.toggle('hidden',n!==MAX_MODELS);
+}
+updateModels();
+$('#form').addEventListener('submit',e=>{
+ e.preventDefault();
+ const form=e.currentTarget;
+ form.querySelectorAll('.field').forEach(f=>f.classList.remove('bad'));
+ const comp=$('#fComp'),name=$('#fName'),wa=$('#fWa'),mail=$('#fMail');
+ [comp,name,wa,mail].forEach(f=>{if(!f.value.trim())f.classList.add('bad')});
+ const okMail=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail.value.trim());
+ if(!okMail)mail.classList.add('bad');
+ let msg='';
+ if(!comp.value.trim())msg='Please fill in your company name.';
+ else if(!name.value.trim())msg="Please fill in the contact person's name.";
+ else if(!wa.value.trim())msg='Please fill in your WhatsApp number.';
+ else if(!okMail)msg='Please fill in a valid e-mail address.';
+ else if(modelCount()!==MAX_MODELS)msg='Please select exactly '+MAX_MODELS+' video models.';
+ else if(!document.querySelector('input[name="delivery"]:checked'))msg='Please choose how you would like to receive your finished videos.';
+ const err=$('#formErr');
+ if(msg){err.textContent=msg;err.classList.remove('hidden');return}
+ err.classList.add('hidden');
+ const models=Array.from(document.querySelectorAll('[data-model]:checked'),i=>i.dataset.model).sort((a,b)=>a-b).join('+');
+ const del=document.querySelector('input[name="delivery"]:checked').dataset.code;
+ const url=new URL(STRIPE_URL);
+ url.searchParams.set('prefilled_email',mail.value.trim());
+ url.searchParams.set('client_reference_id','models='+models+';delivery='+del);
+ window.location.href=url.toString();
+});
 
 // Particles
 (()=>{if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
