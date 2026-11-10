@@ -1048,9 +1048,9 @@ $('#form').addEventListener('submit',e=>{
  err.classList.add('hidden');
  const o=buildOrder();
  const pay=document.querySelector('input[name="pay"]:checked').dataset.code;
- const models=Array.from(document.querySelectorAll('[data-model]:checked'),i=>i.dataset.model).sort((a,b)=>a-b).join('+');
+ const models=Array.from(document.querySelectorAll('[data-model]:checked'),i=>i.dataset.model).sort((a,b)=>a-b).join('-');
  const del=document.querySelector('input[name="delivery"]:checked').dataset.code;
- const ref='models='+models+';delivery='+del+(o.notes?';notes='+encodeURIComponent(o.notes.slice(0,400)):'');
+ const ref=('models-'+models+'_delivery-'+del).slice(0,200);
  try{localStorage.setItem('leaderOrder',JSON.stringify(o))}catch(e){}
  try{localStorage.removeItem('leaderPaidSent')}catch(e){}
  sendOrderEmail(o,'Order placed');
