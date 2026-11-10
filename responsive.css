@@ -1,0 +1,119 @@
+/* Fluid layout and touch controls across viewport sizes and site languages. */
+.model-choice { display: flex; align-items: center; gap: .75rem; min-height: 48px; padding: .75rem 1rem; border: 1px solid rgba(255,255,255,.2); border-radius: 1rem; cursor: pointer; font-weight: 600; background: rgba(255,255,255,.04); }
+figcaption .model-choice { margin-top: .75rem; }
+.model-choice:has(input:checked) { border-color: #ffc107; background: rgba(255,193,7,.12); color: #ffc107; }
+.model-choice:focus-within { outline: 2px solid #ffc107; outline-offset: 3px; }
+.model-choice input { width: 20px; height: 20px; flex-shrink: 0; accent-color: #ffc107; cursor: pointer; }
+.model-fieldset { min-width: 0; }
+.model-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 135px), 1fr)); gap: .5rem; margin-top: .5rem; }
+html { scroll-padding-top: 6.5rem; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { overflow-wrap: anywhere; }
+.grid > *, .flex > * { min-width: 0; }
+img, video { max-width: 100%; }
+main > section { scroll-margin-top: 6.5rem; }
+main > section:not(:first-child) { padding-block: clamp(3.5rem, 7vw, 6rem); }
+main > section:first-child { min-height: 0; padding-top: 7rem; padding-bottom: 1.5rem; }
+main > #exemplos { padding-top: 1.5rem; }
+#galeria > .space-y-5 { margin-top: 1.25rem; }
+main h1 { font-size: clamp(2rem, 5.1vw, 4.5rem); }
+main h2 { font-size: clamp(1.75rem, 4vw, 3rem); line-height: 1.15; }
+#greet { font-size: clamp(2rem, 4.5vw, 3.75rem); }
+h1, h2, h3 { text-wrap: balance; }
+.btn-gold, .btn-ghost { max-width: 100%; justify-content: center; align-items: center; text-align: center; white-space: normal; }
+.btn-gold > i, .btn-ghost > i, summary > i { flex-shrink: 0; }
+#hdr > div:first-child { gap: .75rem; padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right)); }
+#hdr nav { gap: clamp(.75rem, 1.8vw, 2rem); }
+#burger { flex-shrink: 0; }
+.i18n-sel { min-height: 44px; font-size: 1rem; }
+#mnav { max-height: calc(100vh - 6rem); max-height: calc(100dvh - 6rem - env(safe-area-inset-bottom)); overflow-y: auto; overscroll-behavior: contain; background: rgba(12,5,20,.97); }
+#mnav a { min-height: 44px; display: flex; align-items: center; justify-content: center; }
+.showcase-player { width: 100%; max-width: 360px; }
+.showcase-player .video-frame { width: min(100%, 310px); }
+#tabs { gap: .5rem; }
+#tabs .tab { min-height: 44px; flex: 1 1 calc(50% - .5rem); padding-inline: .5rem; }
+#big { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+#bar { opacity: 1; gap: .5rem; }
+#pp, #mute { min-width: 44px; min-height: 44px; }
+#prog { min-width: 24px; height: 24px; background: transparent; position: relative; display: flex; align-items: center; }
+#prog::before { content: ''; position: absolute; inset: 9px 0; border-radius: 9999px; background: rgba(255,255,255,.25); }
+#fill { position: relative; height: 6px; }
+#hCont { bottom: 5rem; }
+#vid { object-fit: contain; }
+#galeria video { object-fit: contain; max-height: 80svh; }
+#form, #ok { padding: clamp(1rem, 3vw, 2.25rem); }
+.field { min-width: 0; max-width: 100%; font-size: 1rem; }
+#fname { max-width: 100%; }
+summary { min-height: 44px; align-items: center; }
+#wa-widget { position: fixed; z-index: 40; display: flex; align-items: center; gap: .75rem; right: calc(.75rem + env(safe-area-inset-right, 0px)); bottom: calc(.75rem + env(safe-area-inset-bottom, 0px)); max-width: calc(100% - 1.5rem - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)); pointer-events: none; }
+#wa { width: 56px; height: 56px; flex: 0 0 56px; font-size: 2rem; line-height: 1; pointer-events: auto; animation: none; }
+#wa:hover { transform: none; }
+#wa-widget .wa-label { position: relative; display: block; width: 140px; max-width: calc(100vw - 104px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)); padding: .625rem .75rem; font-size: .75rem; line-height: 1.35; animation: none; }
+body:has(#burger[aria-expanded="true"]) #wa-widget,
+body:has(#form :focus) #wa-widget { visibility: hidden; pointer-events: none; }
+@media (min-width: 768px) and (min-height: 501px) {
+  #wa-widget { right: calc(1.25rem + env(safe-area-inset-right, 0px)); bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); }
+  #wa { width: 64px; height: 64px; flex-basis: 64px; font-size: 2.5rem; }
+  #wa-widget .wa-label { width: 180px; max-width: 200px; font-size: .875rem; }
+}
+.wa-label::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); border: 6px solid transparent; border-left-color: #fff; border-right: 0; }
+footer { padding-bottom: calc(8rem + env(safe-area-inset-bottom)); }
+/* Clip decorative glows only; content must fit without hiding overflow. */
+#exemplos { overflow: clip; }
+@media (min-width: 1024px) {
+  #exemplos > div > .grid { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); }
+}
+@media (max-width: 1199px) {
+  #hdr nav { display: none; }
+  #burger { display: grid; }
+  #mnav.flex { display: flex; }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  #como-funciona ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #como-funciona ol > div { display: none; }
+}
+@media (max-width: 639px) {
+  main > section > div:not(.aurora) { padding-inline: max(1rem, env(safe-area-inset-left)) max(1rem, env(safe-area-inset-right)); }
+  main > section:first-child .hero-in.inline-flex { border-radius: 1rem; }
+  main > section:first-child .hero-in.flex > a { width: 100%; padding: 1rem; }
+  #okwa { padding-inline: 1rem; }
+}
+@media (max-width: 359px) {
+  #hdr > div:first-child { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; padding-inline: .75rem; }
+  #hdr > div:first-child > a { flex-shrink: 1; }
+  #hdr [data-i18n="brand.sub"] { font-size: 10px; }
+  .i18n-sel { padding-left: .5rem; padding-right: 1.5rem; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  #hdr > div:first-child { height: 4rem; }
+  #mnav { max-height: calc(100dvh - 5rem); gap: .25rem; padding-block: .5rem; }
+  main > section:first-child { padding-top: 6rem; }
+}
+/* Mobile header participates in layout, including browser safe areas. */
+@media (max-width: 767px) {
+  #hdr { position: sticky; top: 0; padding-top: env(safe-area-inset-top, 0px); background: rgba(12,5,20,.96); border: 0; }
+  #hdr > div:first-child { display: grid; grid-template-columns: minmax(0,1fr) auto; height: auto; min-height: 72px; padding-block: .5rem; gap: .5rem; }
+  #hdr > div:first-child > a { flex-shrink: 1; }
+  #hdr > div:first-child > a > span:first-child { font-size: 25px; }
+  #hdr > div:first-child > div { gap: .5rem; }
+  #hdr > div:first-child > div > a { display: none; }
+  #hdr [data-i18n="brand.sub"] { font-size: 10px; line-height: 1.25; }
+  #hdr .i18n-sel { width: 110px; min-height: 44px; padding-left: .625rem; }
+  #mnav { position: absolute; left: 0; right: 0; top: 100%; margin-top: .25rem; max-height: calc(100dvh - 90px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); }
+  main > section:first-child { min-height: 0; padding-top: 1.5rem; padding-bottom: 1rem; }
+  main > #exemplos { padding-top: 1rem; }
+  main > section:first-child h1 { margin-top: 0; font-size: clamp(1.75rem, 7.7vw, 2.5rem); line-height: 1.12; text-wrap: initial; }
+  main > section:first-child [data-i18n="hero.p"] { margin-top: 1rem; font-size: 1rem; line-height: 1.65; }
+  main > section:first-child .hero-in.flex { margin-top: 1.5rem; gap: .75rem; }
+  main > section:first-child .hero-in.flex > a { font-size: .9375rem; min-height: 48px; padding: .875rem 1rem; }
+  main > section:first-child .hero-in { animation: none; opacity: 1; transform: none; }
+  main > section:first-child .float { animation: none; }
+  main h2 { font-size: clamp(1.625rem, 6.5vw, 2.25rem); }
+  #galeria h3 { font-size: clamp(1.5rem, 6vw, 2rem); }
+  #pedido > .grid { gap: 1.5rem; }
+  #form > .grid { grid-template-columns: minmax(0,1fr); }
+  #form .field { min-height: 48px; }
+}
+@media (max-width: 359px) {
+  #hdr > div:first-child > a > span:first-child { font-size: 20px; }
+  #hdr .i18n-sel { width: 104px; padding-left: .375rem; }
+}
