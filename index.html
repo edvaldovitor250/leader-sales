@@ -221,7 +221,7 @@ details[open] .chev{transform:rotate(180deg)}
           </div>
           <div>
             <label for="fFb" class="block text-sm font-semibold mb-2 text-white/75">Facebook</label>
-            <input id="fFb" class="field" type="text" placeholder="facebook.com/yourcompany">
+            <input id="fFb" class="field" type="text" placeholder="yourcompany">
           </div>
           <div>
             <label for="fWeb" class="block text-sm font-semibold mb-2 text-white/75">Company website</label>
@@ -273,11 +273,15 @@ details[open] .chev{transform:rotate(180deg)}
 
       <p id="formErr" class="hidden text-center font-semibold text-holly" role="alert"></p>
 
-      <div class="mx-auto w-full max-w-md rounded-2xl bg-white text-neutral-900 p-6 sm:p-8 text-center shadow-2xl shadow-black/40">
-        <p class="text-xs sm:text-sm font-semibold uppercase tracking-[.15em] text-neutral-500">Promotional price</p>
-        <p class="mt-2 font-display font-black text-5xl sm:text-6xl leading-none tracking-tight">£89.90</p>
-        <p class="mt-3 text-neutral-600">2 personalised Christmas videos</p>
-        <button type="submit" class="mt-6 w-full rounded-xl bg-neutral-200 hover:bg-neutral-300 text-neutral-800 font-semibold text-base sm:text-lg py-4 px-6 transition">Send order</button>
+      <div class="relative mx-auto w-full max-w-md rounded-3xl glass border-gold/30 p-6 sm:p-8 text-center overflow-hidden">
+        <div class="aurora w-72 h-72 bg-gold -top-28 left-1/4" style="opacity:.16"></div>
+        <div class="aurora w-56 h-56 bg-plum -bottom-24 -right-16" style="animation-delay:-6s;opacity:.35"></div>
+        <div class="relative">
+          <p class="text-xs sm:text-sm font-semibold uppercase tracking-[.15em] text-white/60">Promotional price</p>
+          <p class="mt-2 font-display font-black text-5xl sm:text-6xl leading-none tracking-tight grad">£89.90</p>
+          <p class="mt-3 text-white/75">2 personalised Christmas videos</p>
+          <button type="submit" class="btn-gold mt-6 w-full rounded-full py-4 px-6 text-base sm:text-lg font-bold">Send order</button>
+        </div>
       </div>
       <p class="mt-4 text-center text-sm text-white/55">You will be redirected to our secure payment page to complete your order.</p>
     </form>
